@@ -19,7 +19,8 @@ public class Product implements Serializable {
     private String description;
     private Double price;
 
-    @OneToMany(mappedBy = "category")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public Product() {
@@ -87,9 +88,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "category=" + category +
-                ", id=" + id +
+        return "Product{ id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +

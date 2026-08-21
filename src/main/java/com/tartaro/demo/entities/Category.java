@@ -21,7 +21,7 @@ public class Category implements Serializable {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 
     private Set<Product> product = new HashSet<>();
 
@@ -80,8 +80,6 @@ public class Category implements Serializable {
         return "Category{" +
                 "description='" + description + '\'' +
                 ", id=" + id +
-                ", name='" + name + '\'' +
-                ", product=" + product +
-                '}';
+                ", name='" + name ;
     }
 }

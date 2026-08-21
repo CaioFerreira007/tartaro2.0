@@ -1,10 +1,13 @@
 package com.tartaro.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_address")
@@ -13,18 +16,19 @@ public class Address implements Serializable {
 private static final long serialVersionUID = 1L;
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-private int id;
+private Long id;
 private String street;
 private String city;
 private String state;
 private String zip_code;
 private String point_reference;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-
+@OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+private Set<Order> orders = new HashSet<>();
     public Address() {
     }
 
@@ -45,11 +49,11 @@ private String point_reference;
         this.city = city;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -93,15 +97,21 @@ private String point_reference;
         this.zip_code = zip_code;
     }
 
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id == address.id && Objects.equals(user, address.user);
+        return Objects.equals(id, address.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user);
+        return Objects.hashCode(id);
     }
 }

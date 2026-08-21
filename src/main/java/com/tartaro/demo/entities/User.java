@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
-class User implements Serializable {
+public  class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +24,9 @@ class User implements Serializable {
     private String password;
 
     private String phone;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    private Set<Order> orders = new HashSet<>();
 
 @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
     private Set<Address> address = new HashSet<>();
@@ -79,6 +82,13 @@ class User implements Serializable {
         this.phone = phone;
     }
 
+
+@JsonIgnore
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+
     @JsonIgnore
     public Set<Address> getAddress() {
         return address;
@@ -105,8 +115,6 @@ class User implements Serializable {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address=" + address +
-                '}';
+                ", phone='" + phone ;
     }
 }
