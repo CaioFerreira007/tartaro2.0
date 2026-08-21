@@ -1,7 +1,7 @@
 package com.tartaro.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tartaro.demo.enums.StatusOrder;
+import com.tartaro.demo.enums.OrderStatus;
 import com.tartaro.demo.enums.TypeOrder;
 import jakarta.persistence.*;
 
@@ -36,7 +36,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "address_order")
     private Address address;
 
-    private StatusOrder status;
+    private OrderStatus status;
 
     private TypeOrder type_order;
 
@@ -45,7 +45,7 @@ public Order() {
 
 }
 
-    public Order(User user, Instant moment_order, StatusOrder status, TypeOrder type_order) {
+    public Order(User user, Instant moment_order, OrderStatus status, TypeOrder type_order) {
         this.user = user;
         this.moment_order = moment_order;
         this.status = status;
@@ -84,11 +84,11 @@ public Order() {
         this.moment_order = moment_order;
     }
 
-    public StatusOrder getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(StatusOrder status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
