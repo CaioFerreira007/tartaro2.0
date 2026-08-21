@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="tb_product")
@@ -22,6 +24,9 @@ public class Product implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public Product() {
 

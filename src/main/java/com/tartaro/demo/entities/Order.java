@@ -9,6 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,8 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 
     private Instant moment_order = Instant.now();
@@ -43,7 +45,91 @@ public Order() {
 
 }
 
+    public Order(User user, Instant moment_order, StatusOrder status, TypeOrder type_order) {
+        this.user = user;
+        this.moment_order = moment_order;
+        this.status = status;
+        this.type_order = type_order;
+    }
 
+    public Address getAddress() {
+        return address;
+    }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
+    }
+
+    public Instant getMoment_order() {
+        return moment_order;
+    }
+
+    public void setMoment_order(Instant moment_order) {
+        this.moment_order = moment_order;
+    }
+
+    public StatusOrder getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusOrder status) {
+        this.status = status;
+    }
+
+    public TypeOrder getType_order() {
+        return type_order;
+    }
+
+    public void setType_order(TypeOrder type_order) {
+        this.type_order = type_order;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "address=" + address +
+                ", id=" + id +
+                ", user=" + user +
+                ", items=" + items +
+                ", moment_order=" + moment_order +
+                ", status=" + status +
+                ", type_order=" + type_order +
+                '}';
+    }
 }
