@@ -41,6 +41,8 @@ public class Order implements Serializable {
     private TypeOrder typeOrder;
 
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 public Order() {
 
 }
@@ -107,6 +109,18 @@ public Order() {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+    public Double getTotal() {
+        return items.stream().mapToDouble(OrderItem::getSubtotal).sum();
+    }
+
 
     @Override
     public boolean equals(Object o) {
