@@ -30,26 +30,26 @@ public class Order implements Serializable {
     private Set<OrderItem> items = new HashSet<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 
-    private Instant moment_order = Instant.now();
+    private Instant momentOrder = Instant.now();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "address_order")
     private Address address;
-
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    private TypeOrder type_order;
+    @Enumerated(EnumType.STRING)
+    private TypeOrder typeOrder;
 
 
 public Order() {
 
 }
 
-    public Order(User user, Instant moment_order, OrderStatus status, TypeOrder type_order) {
+    public Order(User user, Instant momentOrder, OrderStatus status, TypeOrder typeOrder) {
         this.user = user;
-        this.moment_order = moment_order;
+        this.momentOrder = momentOrder;
         this.status = status;
-        this.type_order = type_order;
+        this.typeOrder = typeOrder;
     }
 
     public Address getAddress() {
@@ -76,12 +76,12 @@ public Order() {
         this.items = items;
     }
 
-    public Instant getMoment_order() {
-        return moment_order;
+    public Instant getMomentOrder() {
+        return momentOrder;
     }
 
-    public void setMoment_order(Instant moment_order) {
-        this.moment_order = moment_order;
+    public void setMomentOrder(Instant momentOrder) {
+        this.momentOrder = momentOrder;
     }
 
     public OrderStatus getStatus() {
@@ -92,12 +92,12 @@ public Order() {
         this.status = status;
     }
 
-    public TypeOrder getType_order() {
-        return type_order;
+    public TypeOrder getTypeOrder() {
+        return typeOrder;
     }
 
-    public void setType_order(TypeOrder type_order) {
-        this.type_order = type_order;
+    public void setTypeOrder(TypeOrder typeOrder) {
+        this.typeOrder = typeOrder;
     }
 
     public User getUser() {
@@ -127,9 +127,9 @@ public Order() {
                 ", id=" + id +
                 ", user=" + user +
                 ", items=" + items +
-                ", moment_order=" + moment_order +
+                ", moment_order=" + momentOrder +
                 ", status=" + status +
-                ", type_order=" + type_order +
+                ", type_order=" + typeOrder +
                 '}';
     }
 }

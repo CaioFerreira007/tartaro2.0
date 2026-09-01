@@ -25,7 +25,7 @@ public  class User implements Serializable {
 
     private String phone;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Order> orders = new HashSet<>();
 
 @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)

@@ -23,7 +23,7 @@ private String state;
 private String zip_code;
 private String point_reference;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
