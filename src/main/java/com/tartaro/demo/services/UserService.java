@@ -15,9 +15,11 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     public List<User> findAll(){return userRepository.findAll();}
 
     public User findById(Long id){
@@ -53,7 +55,7 @@ public class UserService {
         user.setEmail(updatedUser.getEmail());
         user.setPassword(updatedUser.getPassword());
         user.setPhone(updatedUser.getPhone());
-        
+
     }
 
 }
