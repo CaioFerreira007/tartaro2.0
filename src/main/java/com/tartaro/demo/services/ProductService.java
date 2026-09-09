@@ -1,6 +1,8 @@
 package com.tartaro.demo.services;
 
+import com.tartaro.demo.entities.Category;
 import com.tartaro.demo.entities.Product;
+import com.tartaro.demo.repositories.CategoryRepository;
 import com.tartaro.demo.repositories.ProductRepository;
 import com.tartaro.demo.services.middlewares.DataBaseException;
 import com.tartaro.demo.services.middlewares.ResourceNotFoundException;
@@ -16,9 +18,11 @@ public class ProductService {
 
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Product> findAll(){
@@ -31,6 +35,8 @@ public class ProductService {
     }
 
     public Product insert(Product product){
+        Category category = categoryRepository.findById(product.getCategory().getId()).get();
+        product.setCategory(category);
         return  productRepository.save(product);
     }
 

@@ -1,6 +1,7 @@
 package com.tartaro.demo.services;
 
 import com.tartaro.demo.entities.Address;
+import com.tartaro.demo.entities.User;
 import com.tartaro.demo.repositories.AddressRepository;
 import com.tartaro.demo.services.middlewares.DataBaseException;
 import com.tartaro.demo.services.middlewares.ResourceNotFoundException;
@@ -16,9 +17,11 @@ public class AddressService {
 
 
     private final AddressRepository addressRepository;
+    private final UserService userService;
 
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository, UserService userService) {
         this.addressRepository = addressRepository;
+        this.userService = userService;
     }
 
     public List<Address> findAll(){
@@ -32,10 +35,13 @@ public class AddressService {
 
 
     public Address insert(Address address){
-        long addressCount = addressRepository.contByUser(address.getUser());
+        User user = userService.findById(address.getUser().getId());
+
+        long addressCount = addressRepository.countByUser(address.getUser());
         if(addressCount >=5){
             throw new DataBaseException("Limíte máximo de 5 endereços atingidos para este usuário");
         }
+        address.setUser(user);
         return addressRepository.save(address);
     }
 
@@ -64,7 +70,7 @@ public class AddressService {
         existing.setCity(newData.getCity());
         existing.setStreet(newData.getStreet());
         existing.setState(newData.getState());
-        existing.setPoint_reference(newData.getPoint_reference());
-        existing.setZip_code(newData.getZip_code());
+        existing.setPointReference(newData.getPointReference());
+        existing.setZipCode(newData.getZipCode());
     }
 }

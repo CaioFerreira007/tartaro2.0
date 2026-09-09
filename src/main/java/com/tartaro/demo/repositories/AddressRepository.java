@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository  extends JpaRepository<Address,Long> {
 
-    //Contador de Usuários
-    long contByUser(User user);
+    long countByUser(User user);
 }

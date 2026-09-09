@@ -12,96 +12,54 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_address")
 public class Address implements Serializable {
-@Serial
-private static final long serialVersionUID = 1L;
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private String street;
-private String city;
-private String state;
-private String zip_code;
-private String point_reference;
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String street;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String pointReference;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-@OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
-private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+    private Set<Order> orders = new HashSet<>();
+
     public Address() {
     }
 
-    public Address(String street, String city, String state, String point_reference, String zip_code, User user) {
+    public Address(String street, String city, String state, String pointReference, String zipCode, User user) {
         this.street = street;
         this.city = city;
         this.state = state;
-        this.point_reference = point_reference;
-        this.zip_code = zip_code;
+        this.pointReference = pointReference;
+        this.zipCode = zipCode;
         this.user = user;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPoint_reference() {
-        return point_reference;
-    }
-
-    public void setPoint_reference(String point_reference) {
-        this.point_reference = point_reference;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getZip_code() {
-        return zip_code;
-    }
-
-    public void setZip_code(String zip_code) {
-        this.zip_code = zip_code;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getStreet() { return street; }
+    public void setStreet(String street) { this.street = street; }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
+    public String getZipCode() { return zipCode; }
+    public void setZipCode(String zipCode) { this.zipCode = zipCode; }
+    public String getPointReference() { return pointReference; }
+    public void setPointReference(String pointReference) { this.pointReference = pointReference; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
     @JsonIgnore
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
+    public Set<Order> getOrders() { return orders; }
 
     @Override
     public boolean equals(Object o) {
@@ -109,9 +67,6 @@ private Set<Order> orders = new HashSet<>();
         Address address = (Address) o;
         return Objects.equals(id, address.id);
     }
-
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
+    public int hashCode() { return Objects.hashCode(id); }
 }

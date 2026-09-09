@@ -1,6 +1,9 @@
 package com.tartaro.demo.services;
 
+import com.tartaro.demo.entities.Address;
+import com.tartaro.demo.entities.Category;
 import com.tartaro.demo.entities.User;
+import com.tartaro.demo.repositories.AddressRepository;
 import com.tartaro.demo.repositories.UserRepository;
 import com.tartaro.demo.services.middlewares.DataBaseException;
 import com.tartaro.demo.services.middlewares.ResourceNotFoundException;
@@ -16,9 +19,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
     }
     public List<User> findAll(){return userRepository.findAll();}
 
@@ -28,6 +33,7 @@ public class UserService {
     }
 
     public User insert(User user){
+
         return userRepository.save(user);
     }
 
