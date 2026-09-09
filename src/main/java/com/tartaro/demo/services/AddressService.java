@@ -46,21 +46,21 @@ public class AddressService {
     }
 
 
-    public Address update(Address address, Long id){
-        try{
-            Address address1 = addressRepository.getReferenceById(id);
-            updateData(address1, address);
-            return addressRepository.save(address1);
-        }catch (EntityNotFoundException e){
+    public Address update(Address newData, Long id) {
+        try {
+            Address existing = addressRepository.getReferenceById(id);
+            updateData(existing, newData);
+            return addressRepository.save(existing);
+        } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }
     }
-public void updateData(Address address, Address address1){
-        address.setCity(address1.getCity());
-        address.setStreet(address1.getStreet());
-        address.setState(address1.getState());
-        address.setPoint_reference(address1.getPoint_reference());
-        address.setZip_code(address1.getZip_code());
-}
 
+    public void updateData(Address existing, Address newData) {
+        existing.setCity(newData.getCity());
+        existing.setStreet(newData.getStreet());
+        existing.setState(newData.getState());
+        existing.setPoint_reference(newData.getPoint_reference());
+        existing.setZip_code(newData.getZip_code());
+    }
 }

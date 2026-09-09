@@ -5,6 +5,7 @@ import com.tartaro.demo.repositories.ProductRepository;
 import com.tartaro.demo.services.middlewares.DataBaseException;
 import com.tartaro.demo.services.middlewares.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class ProductService {
             Product p = productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(id));
             productRepository.delete(p);
 
-        }catch (ResourceNotFoundException e){
+        }catch (DataIntegrityViolationException e){
             throw new DataBaseException(e.getMessage());
         }
     }

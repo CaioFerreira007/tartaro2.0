@@ -2,8 +2,10 @@ package com.tartaro.demo.services;
 
 import com.tartaro.demo.entities.Category;
 import com.tartaro.demo.repositories.CategoryRepository;
+import com.tartaro.demo.services.middlewares.DataBaseException;
 import com.tartaro.demo.services.middlewares.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,15 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public void  delete(Long id){
+        try{
+            Category category = categoryRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(id));
+            categoryRepository.delete(category);
+        }catch (DataIntegrityViolationException e){
+            throw new DataBaseException(e.getMessage());
+        }
+    }
+
     public Category update(Category category, Long id){
 
         try{
@@ -45,8 +56,8 @@ public class CategoryService {
     }
 
     public void  updateData(Category category, Category existingCategory){
-        category.setName(existingCategory.getName());
-        category.setDescription(existingCategory.getDescription());
+        existingCategory.setName(category.getName());
+        existingCategory.setDescription(category.getDescription());
     }
 
 }
