@@ -32,6 +32,10 @@ public class AddressService {
 
 
     public Address insert(Address address){
+        long addressCount = addressRepository.contByUser(address.getUser());
+        if(addressCount >=5){
+            throw new DataBaseException("Limíte máximo de 5 endereços atingidos para este usuário");
+        }
         return addressRepository.save(address);
     }
 
